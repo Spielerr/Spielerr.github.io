@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://spielerr.github.io/sitemap.xml
+Sitemap: https://Spielerr.github.io/sitemap.xml
