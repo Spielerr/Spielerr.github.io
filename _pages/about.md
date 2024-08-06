@@ -2,24 +2,30 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Moto. Etc.
+subtitle: MSCS at Courant Institute of Mathematical Sciences, New York University
+# subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Moto. Etc.
 
 profile:
-  align: right
-  image: prof_pic.jpg
+  align: left
+  image: display_pic.jpg
+  # image: gpu_cover.jpeg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p>Manhattan, New York 10012</p>
 
 news: true # includes a list of news items
-selected_papers: true # includes a list of papers marked as "selected={true}"
+selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+I am a second-year Computer Science graduate student at <a href='https://cims.nyu.edu/dynamic/'>New York University, Courant Institute of Mathematical Sciences</a>. I am currently focused on my Master’s Thesis research on Programmable Computer Networks and Compiler Optimisation under <a href='https://anirudhsk.github.io/'>Prof. Anirudh Sivaraman</a>.
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+My primary research interests are parallelization, program and compiler optimization, and computer networks. I work extensively in the field of programmable network switches, focusing on building highly optimized compilers and transpilation tools for network programs. I am also interested in general language-agnostic task parallelization techniques using thread-level tools.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+Previously, I worked as a software engineer at Goldman Sachs, where I focused on building low-latency Java-based backend microservices that served critical in-house financial software powering the asset management business. I also built a reliability monitoring service to ensure the active working of day-to-day services that financial analysts use. I also interned at Cisco Systems, being identified as the best Summer Intern, where I built a fully automated unit-testing framework integrated with the control plane software of the IOS-XR operating system, reducing the human effort and failure rates of essential software.
+
+Even earlier, I worked as a Summer Research Intern at the Microsoft Innovation Lab during my undergraduate studies at PES University, where I worked on a Customer Feedback Model to analyze the customer review data of a company and help identify critical issues based on their severity, built using NLP and Sentiment Analysis models.
+
+When not working, I love geeking out over Formula 1, Cricket, MMA, and other sports. And not to forget, I make a mean Masala Dose and a filter coffee to go along with it!
+
+You can read about my current and published research on my projects and publications pages!
