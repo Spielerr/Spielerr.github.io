@@ -1,80 +1,43 @@
 ---
 layout: page
-title: project 9
-description: another project with an image 🎉
-img: assets/img/6.jpg
-importance: 4
-category: fun
+title: Voice-based Grievance System
+description: NLP based citizen issues redressal system
+img: assets/img/grievance.jpg
+importance: 9
+category: work
+related_publications: false
 ---
 
-Every project has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+[[Project Presentation]]({{ '/assets/pdf/Voice_Grievance_Project_Presentation.pdf' | relative_url }})
 
-To give your project a background in the portfolio page, just add the img tag to the front matter like so:
 
-    ---
-    layout: page
-    title: project
-    description: a project with a background image
-    img: /assets/img/12.jpg
-    ---
+### Problem Statement
+* The citizens and members of local communities encounter frequent domestic problems that can range from the petty to the most serious and time-critical. A few examples of the problems are as follows:
+- The street lights on the road may not be working
+- The water supply might be irregular
+- The robberies in the neighbourhood might have increased
+A short circuit might have occured resulting in a dangerous fire, etc
+* It is imperative that the concerned authorities are intimated immediately and the problem be rectified to ensure the smooth functioning of the society
+* But the citizens often find it confusing and troublesome to address these issues to the right department
+* They are often unaware of who, where and how a particular problem should be reported
+* There are often endless delegations wherein a department transfers the complainant to another and so on. This coupled with the inconveniences involved makes the entire process lengthy, cumbersome and ineffective and can result in dangerous consequences due to the delay in addressing the problems.
 
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
-</div>
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    This image can also have a caption. It's like magic.
-</div>
 
-You can also put regular text between your rows of images.
-Say you wanted to write a little bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, _bled_ for your project, and then... you reveal its glory in the next row of images.
+### Our Solution
+The project addressed and solved the above problems by implementing a solution in the following manner:
 
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
+* A mobile application that can accept the grievances and complaints of the citizens in voice and text format.
+* The voice based complaints are converted to text.
+* The recorded complaints and grievances are classified and redirected to the appropriate departments.
+* Further, the complaints reaching a department are ranked on the basis of severity. This is decided based on the type of complaint and the time-critical nature of the matter under consideration.
+* In this way, the citizens will have a single interface to address all their concerns. On the other hand, the departments will only receive the complaints that concern them in a prioritized order.
+* This makes the entire process seamless and very convenient for all the parties involved. It should help both the citizens to address their problems effortlessly and should aid the departments to solve the problems aptly with a much shorter turnaround time.
+* Further, a mobile application with regular updates and statistics about the problems and solutions encourages a constructive dialogue between the citizens and civic authorities and enables a united approach to improve the city.
 
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
 
-{% raw %}
-
-```html
-<div class="row justify-content-sm-center">
-  <div class="col-sm-8 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-  <div class="col-sm-4 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-</div>
-```
-
-{% endraw %}
+### Implementation Details
+* The project involved the implementation of an Android mobile application that can accept the user grievances and complaints in voice and text format.
+* In the case of voice complaints, the project involved the implementation and use of a voice to text conversion algorithm.
+* The complaints in text format are then tokenized and mapped to the respective departments using the concepts of Natural Language Processing (NLP).
+* Further, the complaints reaching a particular department are ranked based on severity and the time-critical nature which is again deduced from the complaint using the concepts of NLP.
+* The project also involved the implementation of a front-end website for the departments to ensure that these complaints are ranked and displayed to the respective departments. The App on the user side and the Website on the department side were completely integrated into an end-to-end pipeline to ensure that the complaints voiced on the app undergo the processing using NLP to finally rank and display the complaints to the respective department on their website.

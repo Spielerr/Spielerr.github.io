@@ -1,81 +1,70 @@
 ---
 layout: page
-title: project 2
-description: a project with a background image and giscus comments
-img: assets/img/3.jpg
+title: Automated Parallelization of Source Code using Program Comprehension
+description: explored techniques such as OpenMP and C++ threads
+img: assets/img/parallelization.jpeg
 importance: 2
 category: work
-giscus_comments: true
+# giscus_comments: true
 ---
+[[Project Report]]({{ '/assets/pdf/CapstoneReport.pdf' | relative_url }})
+[[Project Presentation Slides]]({{ '/assets/pdf/CapstoneSlides.pdf' | relative_url }})
+[[Code]](https://github.com/Spielerr/Automated-Parallelization-of-Source-Code-using-Program-Comprehension)
 
-Every project has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+### Summary
+A Research project aimed at exploring methods to improve the performance of sequential source code by automatically converting it to its functionally accurate parallel equivalent by implementing Intra-Function and Inter-Function Parallelism, thereby ensuring effective and efficient utilization of the underlying hardware resources. This project was developed and implemented as part of the Capstone Project during my Undergraduate Study.
 
-To give your project a background in the portfolio page, just add the img tag to the front matter like so:
+### Abstract
+* There has been a rapid improvement in hardware and computing platforms and their capabilities
+* But the performance gain achieved is limited by the software and programs written to run on these platforms
+* Sequential software does not exploit these hardware capabilities to the maximum possible extent
+* This is with respect to the utilization of multiple threads, processors, cores, and other available resources
+* Therefore, there is an impetus for developing Parallel programs that can effectively utilize these resources
+* But developing Parallel software brings its own challenges as follows:
+- It requires highly skilled programmers
+- It requires fundamental changes in approach due to the non-intuitive nature of parallel programming
+- It increases testing and debugging complexity due to issues like race conditions, deadlocks, busy waiting, etc.
+* These challenges increase the development time and the costs involved, thereby rendering it infeasible
+* Auto-parallelization techniques help in addressing these challenges and mitigating the costs
+* Contemporary approaches involve loop parallelization and other techniques specific to an application
+* The goal of this Research project was to enable parallelization for a wide variety of programs and achieve the maximum possible parallelism
+* The project involved the implementation of the following two paradigms of parallelization:
+- Intra-Function parallelism: This was implemented using the concept of program comprehension that enabled the identification of the intent and the algorithm implemented in a particular code section and consequent replacement with the optimized parallel version based on the defined mapping in the backend database
+- Inter-Function parallelism: This was implemented using a novel thread scheduling algorithm that enabled the parallel execution of the different functions in the original sequential program
 
-    ---
-    layout: page
-    title: project
-    description: a project with a background image
-    img: /assets/img/12.jpg
-    ---
+
+### Implementation Details
+The below flowchart gives an overview of the implemented project:
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="assets/img/autopar.png" title="example image" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
-</div>
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    This image can also have a caption. It's like magic.
+    Working pipeline of our solution
 </div>
 
-You can also put regular text between your rows of images.
-Say you wanted to write a little bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, _bled_ for your project, and then... you reveal its glory in the next row of images.
 
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
+### Program Comprehension Phase
+* The input source code is represented as Vector Embeddings
+* The similarities between the vector embeddings of different programs are found, to group them into clusters
+* Each of the clusters corresponds to a previously defined category that has a mapped parallel version in the backend database
+* The input program is tried to be associated into one such cluster by using appropriate thresholds
+* Dynamic Verification is used to additionally verify if the predicted label is accurate
+* The “Others” Category is introduced to ensure correctness of the program by avoiding any misclassification
+* Additionally, this phase involves the generation of an enriched Abstract Syntax Tree and its use to perform data-dependency, control, and data-flow analysis, which are pre-requisites for the parallelization phase
 
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
 
-{% raw %}
+### Parallelization Phase
+* This phase involved the utilization of all the generated information and analysis regarding the program to perform parallelization
+* There were four different approaches that were experimented with and researched up on as follows:
+- Parallelism by AST Querying and OpenMP Directives
+- Naive Thread Scheduling using C++ Promises and Futures
+- Master-Worker based Optimized Thread Scheduling
+- Non Master-Worker based Optimized Thread Scheduling
+* With each of these incremental approaches, there was an improvement in the parallel code being generated with respect to the different cases handled and the performance gain achieved. Further, the transition through these incremental approaches enabled a more fine-grained control over the different aspects concerning parallelization due to the lowering of the layers of abstraction.
 
-```html
-<div class="row justify-content-sm-center">
-  <div class="col-sm-8 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-  <div class="col-sm-4 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-</div>
-```
 
-{% endraw %}
+### Conclusion
+The project successfully achieved the research and development of techniques to automatically convert sequential source code into its functionally accurate parallel equivalent with a substantial performance speedup (up to 500 times for large data), thereby enabling the efficient and effective utilization of the underlying hardware resources.

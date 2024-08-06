@@ -1,81 +1,79 @@
 ---
 layout: page
-title: project 7
-description: with background image
-img: assets/img/4.jpg
-importance: 1
+title: YACS - Yet Another Centralized Scheduler
+description: a scheduling framework built using Python
+img: assets/img/yacs.jpg
+importance: 7
 category: work
-related_publications: true
+related_publications: false
 ---
 
-Every project has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+[[Project Report]]({{ '/assets/pdf/Big_Data_Project_Report.pdf' | relative_url }})
+[[Code]](https://github.com/Spielerr/Big_Data_YACS)
 
-To give your project a background in the portfolio page, just add the img tag to the front matter like so:
 
-    ---
-    layout: page
-    title: project
-    description: a project with a background image
-    img: /assets/img/12.jpg
-    ---
+### Summary
+A project aimed at implementing a centralized scheduling framework that maintains and manages a master node and multiple worker nodes, all simulated as different processes on a single machine. The Master node receives job requests, which are scheduled on multiple slots across the available worker machines. The Master process consists of separate threads to listen to requests, to schedule map, and reduce tasks, and to listen to job completion information from workers. The Worker process listens to job allocation information and simulates execution. The job requests consist of map and reduce tasks with the dependency that the reduce tasks be executed only after the completion of the corresponding map tasks. The project involved the implementation of 3 different scheduling algorithms, namely Least loaded, Round-Robin, and Randomised Scheduling algorithms. This project was developed and implemented as part of the Big Data Course during my Undergraduate Study.
 
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
-</div>
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    This image can also have a caption. It's like magic.
-</div>
 
-You can also put regular text between your rows of images, even citations {% cite einstein1950meaning %}.
-Say you wanted to write a bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, _bled_ for your project, and then... you reveal its glory in the next row of images.
+### Implementation Details
+The project involved the implementation of two Python programs - master.py and worker.py which perform the functions of the Master and a Worker machine respectively. These programs are independent of each other and can run on separate machines if required.
 
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
+#### master.py
+This program essentially consists of 4 separate threads to carry out the following tasks:
 
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
+1. **JobListener**: Listens to job requests
+2. **JobScheduler**: Starts a job and schedules its map tasks on the workers
+3. **ReduceTaskScheduler**: Schedules the reduce tasks on the workers
+4. **WorkerManager**: Listens to job completion updates from the workers
 
-{% raw %}
+It also contains the implementation of the 3 scheduling algorithms (Random, Round-Robin, and Least Loaded).
 
-```html
-<div class="row justify-content-sm-center">
-  <div class="col-sm-8 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-  <div class="col-sm-4 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-</div>
-```
+The JobListener thread performs the following tasks in order:
 
-{% endraw %}
+* Listen to incoming job requests through specified port (in this case, port 5000).
+* Initially append only the map tasks into the Map tasks queue.
+
+The JobScheduler thread performs the following tasks in order:
+
+* Run the scheduler function to determine the workers to which the map tasks can be allocated and then send the current task information to the allotted Worker.
+* Update new allotment information by calling the Scheduler function again. Repeat until all the map tasks are allotted to Workers.
+* If there are no free slots available in any of the workers (as returned from the Scheduler function), make the Master wait for 1 second, before it again polls and tries to find if any slots become free.
+
+The ReduceTaskScheduler thread performs the following tasks in order:
+
+* Run the scheduler function to determine the workers to which the reduce tasks can be allocated and then send the current task information to the allotted Worker.
+* Update new allotment information by calling the Scheduler function again. Repeat until all the reduce tasks are allotted to Workers.
+* If there are no free slots available in any of the workers (as returned from the Scheduler function), make the Master wait for 1 second, before it again polls and tries to find if any slots become free.
+
+The WorkerManager thread performs the following tasks in order:
+
+* Listen to workers regarding updates about task completions. Update related information accordingly (increase free slot count, reduce the count of tasks to be allocated).
+* If all the map tasks of a job are completed, only then append the corresponding reduce tasks of the same job to the reduce tasks queue, which can then be scheduled thereby preserving the task dependency criteria.
+* If the final reduce task is finished, then that particular job is completed and appropriately logged.
+
+The important events with corresponding timestamps logged are as follows:
+
+* Binding sockets to setup communication between master and job-requests-sender, master and worker
+* Scheduler type for analysis reference
+* When no slots in worker machines are free
+* Starting a new job
+* Sending and receiving task information to and from Workers
+* Ending a job
+
+#### worker.py
+This program simulates the working of the Worker machines. The same program is run multiple times simultaneously to simulate the simultaneous running of multiple Worker machines. This program essentially listens to the job allocation information from the master (on one thread, with a specified port number), and simulates the execution of these tasks by decrementing the task duration and sleeping for 1 second (on a second thread). Meanwhile, it continues to listen to the Master (on the other thread), while each of the slots continues executing their tasks.
+
+Each of the workers logs events into the log file. They log the following information:
+
+* Starting a map/reduce task and recording the timestamp
+* Ending a map/reduce task and recording the timestamp
+
+### Results and Analysis
+The task and job execution times shed light on the type of scheduling algorithm used. The tests were run with 3 worker machines, with 3, 7, and 9 slots respectively, for 30 job requests.
+
+The observations were as follows:
+
+* The Least Loaded scheduling algorithm has the least mean job completion time.
+* The job completion times for Random scheduling vary, highlighting the random nature of this type of scheduling.
+* The Round-Robin scheduling algorithm generally takes the longest time to finish job execution.
